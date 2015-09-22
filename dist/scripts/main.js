@@ -1,7 +1,18 @@
 'use strict';
 // var UserModel=require('/models/user');
 
-
+$.get(
+	'http://tiyfe.herokuapp.com/collections/profileBob',
+	function(response){
+		$('#name').val(response[0].name);
+		$('#inputEmail3').val(response[0].email);
+		$('#role').val(response[0].role);
+		$('.navbar-right .dropdown .dropdown-toggle ').text(response[0].name);
+		$('.profile-usertitle-name').text(response[0].name);
+		$('.profile-usertitle-job').text(response[0].role);
+	},
+	'json'
+	);
 
 var user = new UserModel();
 var App = Backbone.Router.extend({
@@ -16,9 +27,6 @@ var App = Backbone.Router.extend({
 	edit: function() {
 		$('.page').hide();
 		$('#edit').show();
-		$('#name').val(user.get('name'));
-		$('#inputEmail3').val(user.get('email'));
-		$('#role').val(user.get('role'));
 	}
 });
 
@@ -30,7 +38,15 @@ $('.form-horizontal').submit(function(e){
 	console.log('hey!');
 	user.set({name: $('#name').val(), email: $('#inputEmail3').val(), role: $('#role').val()});
 	console.log(user);
-	$('.navbar-right .dropdown a').text(user.get('name'));
+	$.post(
+		'http://tiyfe.herokuapp.com/collections/profileBob',
+		{name: $('#name').val(), email: $('#inputEmail3').val(), role: $('#role').val()},
+		'json'
+		);
+	
+});
+user.on('change', function(){
+	$('.navbar-right .dropdown .dropdown-toggle ').text(user.get('name'));
 	$('.profile-usertitle-name').text(user.get('name'));
 	$('.profile-usertitle-job').text(user.get('role'));
 })
