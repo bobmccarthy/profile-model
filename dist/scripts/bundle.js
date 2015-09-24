@@ -35,7 +35,11 @@ $('.form-horizontal').submit(function (e) {
 	console.log('hey!');
 	user.set({ name: $('#name').val(), email: $('#inputEmail3').val(), role: $('#role').val() });
 	console.log(user);
-	$.post('http://tiyfe.herokuapp.com/collections/profileBob', { name: $('#name').val(), email: $('#inputEmail3').val(), role: $('#role').val() }, 'json');
+	$.post('http://tiyfe.herokuapp.com/collections/profileBob', {
+		name: $('#name').val(),
+		email: $('#inputEmail3').val(),
+		role: $('#role').val()
+	}, 'json');
 });
 user.on('change', function () {
 	$('.navbar-right .dropdown .dropdown-toggle ').text(user.get('name'));
